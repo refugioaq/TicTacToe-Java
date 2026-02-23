@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record GameManagementService(
         GameRepository gameRepository,
-        GameServiceImpl gameServiceImpl
+        GameService gameService
         ) {
 
     public Game startNewGame() {
@@ -23,20 +23,62 @@ public record GameManagementService(
         return game;
     }
 
+
     public Game getGame(UUID gameId) {
         if (gameId == null) return null;
         return gameRepository.findById(gameId);
     }
 
-    public Game makeMove(UUID gameId, GameField newField) {
+    public StepResult getStepResult(UUID gameId) {
         Game game = gameRepository.findById(gameId);
-        if (game == null) {
+//        if (game == null) throw new GameNotFoundException();
+
+        GameStatus status = gameService.checkGameEnd(game.getGameField().field());
+
+        String message = switch (status) {
+            case X_WON -> "Игрок победил";
+            case DRAW -> "Ничья";
+            case O_WON -> "Компьютер победил";
+            case IN_PROGRESS -> "Игра продолжается";
+        };
+
+        return new StepResult(game, message);
+    }
+
+    public StepResult gameProcess(UUID gameId, GameField newField) {
+        GameManagementService service = this;
+
+        Game gameAfterPlayer = service.makeMove(gameId, newField);
+        GameStatus statusAfterPlayer = gameService.checkGameEnd(gameAfterPlayer.getGameField().field());
+
+        if (statusAfterPlayer == GameStatus.X_WON) {
+            return new StepResult(gameAfterPlayer, "Игрок победил");
+        } else if (statusAfterPlayer == GameStatus.DRAW) {
+            return new StepResult(gameAfterPlayer, "Ничья");
+        }
+
+        Game gameAfterComputer = service.makeComputerMove(gameId);
+
+        GameStatus statusAfterComputer = gameService.checkGameEnd(gameAfterComputer.getGameField().field());
+
+        if (statusAfterComputer == GameStatus.O_WON) {
+            return new StepResult(gameAfterComputer, "Компьютер победил");
+        } else if (statusAfterComputer == GameStatus.DRAW) {
+            return new StepResult(gameAfterComputer, "Ничья");
+        }
+
+        return new StepResult(gameAfterComputer, "Игра продолжается");
+    }
+
+    public Game makeMove(UUID gameId, GameField newField) {
+        GameField field = gameRepository.findById(gameId).getGameField();
+        if (field == null) {
             throw new IllegalArgumentException("Игра не найдена");
         }
 
-        boolean isValid = gameServiceImpl.validateGameField(game, newField);
+        boolean isValid = gameService.validateGameField(field, newField);
         if (!isValid) {
-            throw new IllegalArgumentException("Есть косяк");
+            throw new IllegalArgumentException("Поле не изменено или изменено некорректно");
         }
 
         Player[][] result = deepCopyField(newField.field());
@@ -50,11 +92,8 @@ public record GameManagementService(
 
     public Game makeComputerMove(UUID gameId) {
         Game game = gameRepository.findById(gameId);
-        if (game == null) {
-            throw new IllegalArgumentException("Игра не найдена");
-        }
 
-        Move bestMove = gameServiceImpl.findBestMove(game.getGameField(), Player.O);
+        Move bestMove = gameService.getNextMoveWithMinimax(game.getGameField(), Player.O);
 
         GameField currentField = game.getGameField();
         Player[][] field = currentField.field();

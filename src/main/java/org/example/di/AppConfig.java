@@ -21,12 +21,9 @@ public class AppConfig {
     }
 
     @Bean
-    public GameServiceImpl gameServiceImpl() { return new GameServiceImpl(); }
-
-    @Bean
-    public GameManagementService GameManagementService(
+    public GameManagementService gameManagementService(
             GameRepository repository,
-            @Qualifier("gameServiceImpl") GameServiceImpl service) {
+            GameService service) {
         return new GameManagementService(repository, service);
     }
     @Bean

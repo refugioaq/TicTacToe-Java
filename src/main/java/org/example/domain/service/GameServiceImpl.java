@@ -9,23 +9,16 @@ import java.util.List;
 import static org.example.domain.Configurtion.SIZE;
 
 public class GameServiceImpl implements GameService {
-    private Player[][] field = new Player[3][3];
-
-    public Move findBestMove(GameField field, Player player) {
-        GameField copy = field.copy();
-        this.field = copy.field();
-        return getNextMoveWithMinimax(player);
-    }
-
     @Override
-    public Move getNextMoveWithMinimax(Player player) {
+    public Move getNextMoveWithMinimax(GameField copy, Player player) {
         int bestScore = Integer.MAX_VALUE;
         Move bestMove = null;
-        List<Move> moves = getAvailableMoves();
+        Player[][] field = copy.field();
+        List<Move> moves = getAvailableMoves(field);
         for (Move move : moves) {
             field[move.getRow()][move.getCol()] = player;
 
-            int score = minimax(0, true);
+            int score = minimax(field, 0, true);
             field[move.getRow()][move.getCol()] = Player.EMPTY;
 
             if (score < bestScore) {
@@ -39,8 +32,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public boolean validateGameField(Game currentGameField, GameField newGameField) {
-        Player[][] oldField = currentGameField.getGameField().field();
+    public boolean validateGameField(GameField currentGameField, GameField newGameField) {
+        Player[][] oldField = currentGameField.field();
         Player[][] newField = newGameField.field();
         int newState = 0;
         for (int i = 0; i < SIZE; i++) {
@@ -55,20 +48,15 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameStatus checkGameEnd() {
+    public GameStatus checkGameEnd(Player[][] field) {
 
-        if(checkWin(Player.X)) return GameStatus.X_WON;
+        if(checkWin(field, Player.X)) return GameStatus.X_WON;
 
-        if (checkWin(Player.O)) return GameStatus.O_WON;
+        if (checkWin(field, Player.O)) return GameStatus.O_WON;
 
-        if (!hasEmptyCeil()) return GameStatus.DRAW;
+        if (!hasEmptyCeil(field)) return GameStatus.DRAW;
 
         return GameStatus.IN_PROGRESS;
-    }
-
-    @Override
-    public void setField(Player[][] field) {
-        this.field = field;
     }
 
     public int evaluateBoard(GameStatus status, int depth) {
@@ -80,9 +68,9 @@ public class GameServiceImpl implements GameService {
         return 0;
     }
 
-    public int minimax(int depth, boolean isMaximizing) {
+    public int minimax(Player[][] field, int depth, boolean isMaximizing) {
 //        System.out.println("minimax: depth=" + depth + ", isMax=" + isMaximizing);
-        GameStatus status = checkGameEnd();
+        GameStatus status = checkGameEnd(field);
         if (status != GameStatus.IN_PROGRESS) {
             return evaluateBoard(status, depth);
         }
@@ -91,9 +79,9 @@ public class GameServiceImpl implements GameService {
         if(isMaximizing) {
             bestScore = Integer.MIN_VALUE;
 
-            for (Move move : getAvailableMoves()) {
+            for (Move move : getAvailableMoves(field)) {
                 field[move.getRow()][move.getCol()] = Player.X;
-                int score = minimax(depth + 1, false);
+                int score = minimax(field, depth + 1, false);
                 field[move.getRow()][move.getCol()] = Player.EMPTY;
 
                 bestScore = Math.max(bestScore, score);
@@ -102,11 +90,11 @@ public class GameServiceImpl implements GameService {
         } else {
             bestScore = Integer.MAX_VALUE;
 
-            List<Move> moves = getAvailableMoves();
+            List<Move> moves = getAvailableMoves(field);
 
             for (Move move : moves) {
                 field[move.getRow()][move.getCol()] = Player.O;
-                int score = minimax(depth + 1, true);
+                int score = minimax(field, depth + 1, true);
                 field[move.getRow()][move.getCol()] = Player.EMPTY;
 
                 bestScore = Math.min(bestScore, score);
@@ -116,7 +104,7 @@ public class GameServiceImpl implements GameService {
         return bestScore;
     }
 
-    public boolean checkWin(Player player) {
+    public boolean checkWin(Player[][] field, Player player) {
         for (int i = 0; i < SIZE; i++) {
             if (field[i][0] == player && field[i][1] == player && field[i][2] == player)
                 return true;
@@ -129,7 +117,7 @@ public class GameServiceImpl implements GameService {
                 || (field[0][2] == player && field[1][1] == player && field[2][0] == player);
     }
 
-    private boolean hasEmptyCeil() {
+    private boolean hasEmptyCeil(Player[][] field) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (field[i][j] == Player.EMPTY) {
@@ -140,7 +128,7 @@ public class GameServiceImpl implements GameService {
         return false;
     }
 
-    private List<Move> getAvailableMoves() {
+    private List<Move> getAvailableMoves(Player[][] field) {
         List<Move> moves = new ArrayList<>();
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {

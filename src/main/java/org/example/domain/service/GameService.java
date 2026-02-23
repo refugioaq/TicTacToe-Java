@@ -3,11 +3,9 @@ package org.example.domain.service;
 import org.example.domain.model.*;
 
 public interface GameService {
-    Move getNextMoveWithMinimax(Player player);
+    Move getNextMoveWithMinimax(GameField field, Player player);
 
-    boolean validateGameField(Game currentGameField, GameField newGameField);
+    boolean validateGameField(GameField currentGameField, GameField newGameField);
 
-    GameStatus checkGameEnd();
-
-    void setField(Player[][] field);
+    GameStatus checkGameEnd(Player[][] field);
 }

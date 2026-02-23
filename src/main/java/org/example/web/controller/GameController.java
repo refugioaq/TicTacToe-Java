@@ -57,61 +57,14 @@ public class GameController {
                         ));
             }
 
-            Game currentGame = gameManagementService.getGame(gameId);
-            if (currentGame == null) {
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(webGameMapper.toDtoError(gameId,
-                                request.field(),
-                                "Игра не найдена"
-                        ));
-            }
-
             Player[][] playerField = webGameMapper.toDomain(request.field());
             GameField requestField = new GameField(playerField);
 
-            boolean isValid = gameService.validateGameField(currentGame, requestField);
-            if (!isValid) {
-                return ResponseEntity
-                        .badRequest()
-                        .body(webGameMapper.toDto(
-                                currentGame,
-                                "Некорректный ход: поле изменено не по правилам или не изменено"
-                        ));
-            }
-            Game gameAfterPlayer = gameManagementService.makeMove(gameId, requestField);
-
-            gameService.setField(gameAfterPlayer.getGameField().field());
-
-            GameStatus status = gameService.checkGameEnd();
-
-            if (status == GameStatus.X_WON) {
-                return ResponseEntity.ok(webGameMapper.toDto(
-                        gameAfterPlayer,
-                        "Игрок победил"
-                        ));
-            } else if (status == GameStatus.DRAW) {
-                return ResponseEntity.ok(webGameMapper.toDto(
-                        gameAfterPlayer,
-                        "Ничья"
-                ));
-            }
-
-            Game gameAfterComputer = gameManagementService.makeComputerMove(gameId);
-
-            gameService.setField(gameAfterComputer.getGameField().field());
-
-            GameStatus finalState = gameService.checkGameEnd();
-
-            String message = switch (finalState) {
-                case O_WON -> "Компьютер победил";
-                case DRAW -> "Ничья";
-                default -> "Игра продолжается";
-            };
+            StepResult result = gameManagementService.gameProcess(gameId, requestField);
 
             return ResponseEntity.ok(webGameMapper.toDto(
-                    gameAfterComputer,
-                    message
+                    result.getGame(),
+                    result.getMessage()
             ));
 
         } catch (IllegalArgumentException e) {
@@ -136,30 +89,12 @@ public class GameController {
     @GetMapping("/{gameId}")
     ResponseEntity<GameDto> getGame(@PathVariable UUID gameId) {
         try {
-            Game game = gameManagementService.getGame(gameId);
-
-            if (game == null) {
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(webGameMapper.toDtoError(
-                                gameId,
-                                null,
-                                "Игра не найдена"
-                        ));
-            }
-            GameStatus status = gameService.checkGameEnd();
-
-            String message = switch (status) {
-                case X_WON -> "Игрок победил";
-                case DRAW -> "Ничья";
-                case O_WON -> "Компьютер победил";
-                case IN_PROGRESS -> "Игра продолжается";
-            };
+            StepResult result = gameManagementService.getStepResult(gameId);
 
             return ResponseEntity
                     .ok(webGameMapper.toDto(
-                            game,
-                            message
+                            result.getGame(),
+                            result.getMessage()
                     ));
         } catch (Exception e) {
             return ResponseEntity
