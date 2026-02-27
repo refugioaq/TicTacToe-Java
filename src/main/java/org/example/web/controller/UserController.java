@@ -31,7 +31,11 @@ public class UserController {
     ResponseEntity<String> login(@RequestBody @Validated SignUpRequest request) {
         String credentials = request.getLogin() + ":" + request.getPassword();
         String encoded = Base64.getEncoder().encodeToString(credentials.getBytes());
-        if (userService.authorize(encoded) != null) return ResponseEntity.ok("Авторизация прошла успешно");
-        else return ResponseEntity.badRequest().body("Авторизация провалена");
+        if (userService.authorize(encoded) != null) {
+            return ResponseEntity.ok("Авторизация прошла успешно");
+        }
+        else {
+            return ResponseEntity.badRequest().body("Авторизация провалена");
+        }
     }
 }
