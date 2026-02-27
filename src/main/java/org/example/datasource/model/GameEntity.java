@@ -1,21 +1,36 @@
 package org.example.datasource.model;
 
+import jakarta.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name = "games")
 public class GameEntity {
-    private final GameFieldEntity gameFieldEntity;
-    private final UUID gameId;
+    @Column(name = "field", nullable = false)
+    private String boardState;
+    @Id
+    private UUID gameId;
 
-    public GameEntity(GameFieldEntity gameFieldEntity, UUID gameId) {
-        this.gameFieldEntity = gameFieldEntity;
+    public GameEntity() {}
+
+    public GameEntity(String boardState, UUID gameId) {
+        this.boardState = boardState;
         this.gameId = gameId;
+    }
+
+    public String getBoardState() {
+        return boardState;
+    }
+
+    public void setBoardState(String boardState) {
+        this.boardState = boardState;
     }
 
     public UUID getGameId() {
         return gameId;
     }
 
-    public GameFieldEntity getGameFieldEntity() {
-        return gameFieldEntity;
+    public void setGameId(UUID gameId) {
+        this.gameId = gameId;
     }
 }

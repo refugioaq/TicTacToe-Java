@@ -2,13 +2,9 @@ package org.example.di;
 
 import org.example.datasource.mapper.GameMapper;
 import org.example.datasource.repository.GameRepository;
-import org.example.datasource.repository.GameRepositoryImpl;
-import org.example.datasource.storage.GameStorage;
-import org.example.domain.service.GameManagementService;
-import org.example.domain.service.GameService;
-import org.example.domain.service.GameServiceImpl;
+import org.example.datasource.repository.UserRepository;
+import org.example.domain.service.*;
 import org.example.web.mapper.WebGameMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,12 +19,9 @@ public class AppConfig {
     @Bean
     public GameManagementService gameManagementService(
             GameRepository repository,
-            GameService service) {
-        return new GameManagementService(repository, service);
-    }
-    @Bean
-    public GameStorage gameStorage() {
-        return new GameStorage();
+            GameService service,
+            GameMapper mapper) {
+        return new GameManagementService(repository, service, mapper);
     }
 
     @Bean
@@ -37,12 +30,12 @@ public class AppConfig {
     }
 
     @Bean
-    public GameRepository gameRepository(GameStorage gameStorage, GameMapper mapper) {
-        return new GameRepositoryImpl(mapper, gameStorage);
+    public WebGameMapper webGameMapper() {
+        return new WebGameMapper();
     }
 
     @Bean
-    public WebGameMapper webGameMapper() {
-        return new WebGameMapper();
+    public AuthFilter authFilter(UserService service) {
+        return new AuthFilter(service);
     }
 }

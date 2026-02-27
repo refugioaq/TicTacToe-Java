@@ -1,12 +1,19 @@
 package org.example.domain.service;
 
+import org.example.datasource.mapper.GameMapper;
+import org.example.datasource.model.GameEntity;
 import org.example.datasource.repository.GameRepository;
+import org.example.domain.exception.GameNotFoundException;
 import org.example.domain.model.*;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 import java.util.UUID;
 
 public record GameManagementService(
         GameRepository gameRepository,
-        GameService gameService
+        GameService gameService,
+        GameMapper gameMapper
         ) {
 
     public Game startNewGame() {
@@ -19,19 +26,18 @@ public record GameManagementService(
 
         GameField gameField = new GameField(emptyField);
         Game game = new Game(gameField);
-        gameRepository.save(game);
+
+        GameEntity entity = gameMapper.toEntity(game);
+        gameRepository.save(entity);
+
         return game;
     }
 
-
-    public Game getGame(UUID gameId) {
-        if (gameId == null) return null;
-        return gameRepository.findById(gameId);
-    }
-
     public StepResult getStepResult(UUID gameId) {
-        Game game = gameRepository.findById(gameId);
-//        if (game == null) throw new GameNotFoundException();
+        GameEntity entity = gameRepository.findById(gameId)
+                .orElseThrow(() -> new GameNotFoundException(gameId));
+
+        Game game = gameMapper.toDomain(entity);
 
         GameStatus status = gameService.checkGameEnd(game.getGameField().field());
 
@@ -46,9 +52,8 @@ public record GameManagementService(
     }
 
     public StepResult gameProcess(UUID gameId, GameField newField) {
-        GameManagementService service = this;
 
-        Game gameAfterPlayer = service.makeMove(gameId, newField);
+        Game gameAfterPlayer = makeMove(gameId, newField);
         GameStatus statusAfterPlayer = gameService.checkGameEnd(gameAfterPlayer.getGameField().field());
 
         if (statusAfterPlayer == GameStatus.X_WON) {
@@ -57,7 +62,7 @@ public record GameManagementService(
             return new StepResult(gameAfterPlayer, "Ничья");
         }
 
-        Game gameAfterComputer = service.makeComputerMove(gameId);
+        Game gameAfterComputer = makeComputerMove(gameId);
 
         GameStatus statusAfterComputer = gameService.checkGameEnd(gameAfterComputer.getGameField().field());
 
@@ -71,10 +76,11 @@ public record GameManagementService(
     }
 
     public Game makeMove(UUID gameId, GameField newField) {
-        GameField field = gameRepository.findById(gameId).getGameField();
-        if (field == null) {
-            throw new IllegalArgumentException("Игра не найдена");
-        }
+        GameEntity entity = gameRepository.findById(gameId)
+                .orElseThrow(() -> new GameNotFoundException(gameId));
+
+        GameField field = gameMapper.toDomain(entity).getGameField();
+
 
         boolean isValid = gameService.validateGameField(field, newField);
         if (!isValid) {
@@ -82,17 +88,19 @@ public record GameManagementService(
         }
 
         Player[][] result = deepCopyField(newField.field());
-
         GameField playerMoveField = new GameField(result);
         Game updatedGame = new Game(playerMoveField, gameId);
-
-        gameRepository.save(updatedGame);
+        GameEntity updatedGameEntity = gameMapper.toEntity(updatedGame);
+        
+        gameRepository.save(updatedGameEntity);
         return updatedGame;
     }
 
     public Game makeComputerMove(UUID gameId) {
-        Game game = gameRepository.findById(gameId);
+        GameEntity entity = gameRepository.findById(gameId)
+                .orElseThrow(() -> new GameNotFoundException(gameId));
 
+        Game game = gameMapper.toDomain(entity);
         Move bestMove = gameService.getNextMoveWithMinimax(game.getGameField(), Player.O);
 
         GameField currentField = game.getGameField();
@@ -101,9 +109,10 @@ public record GameManagementService(
         newField[bestMove.getRow()][bestMove.getCol()] = Player.O;
 
         GameField computerMoveField = new GameField(newField);
+
         Game updatedGame = new Game(computerMoveField, gameId);
 
-        gameRepository.save(updatedGame);
+        gameRepository.save(gameMapper.toEntity(updatedGame));
         return updatedGame;
     }
 
