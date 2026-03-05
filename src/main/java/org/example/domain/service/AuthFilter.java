@@ -49,6 +49,7 @@ public class AuthFilter extends GenericFilterBean {
             request.setAttribute("userId", id);
             chain.doFilter(request, response);
         } catch (Exception e) {
+            System.err.println("Auth error: " + e.getMessage());
             response.sendError(401, "Неверный логин или пароль");
         }
     }

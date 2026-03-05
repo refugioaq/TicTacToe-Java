@@ -1,8 +1,10 @@
 package org.example.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.domain.model.*;
 import org.example.domain.service.GameManagementService;
 import org.example.web.mapper.WebGameMapper;
+import org.example.web.model.CreateGameRequest;
 import org.example.web.model.GameDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +27,28 @@ public class GameController {
     }
 
     @PostMapping("/start")
-    public ResponseEntity<GameDto> startNewGame() {
-        Game game = gameManagementService.startNewGame();
+    public ResponseEntity<GameDto> startNewGame(
+            HttpServletRequest request,
+            @RequestBody CreateGameRequest gameRequest
+    ) {
+        Game game = gameManagementService.startNewGame(webGameMapper.toDomainMode(gameRequest.mode()), (UUID) request.getAttribute("userId"));
         return ResponseEntity.ok(webGameMapper.toDto(game, "Старт игры"));
+    }
+
+    @PostMapping("/join/{gameId}")
+    public ResponseEntity<GameDto> joinSecondPlayer (
+            @PathVariable UUID gameId,
+            HttpServletRequest request
+    ) {
+        Game game = gameManagementService.joinSecondPlayer(gameId, (UUID) request.getAttribute("userId"));
+        return ResponseEntity.ok(webGameMapper.toDto(game, "Второй игрок присоединяется"));
     }
 
     @PostMapping("/{gameId}")
     ResponseEntity<GameDto> makeMove(
             @PathVariable UUID gameId,
-            @RequestBody GameDto request
+            @RequestBody GameDto request,
+            HttpServletRequest requestUserId
     ) {
         if (!gameId.equals(request.gameId())) {
             return ResponseEntity
@@ -47,7 +62,7 @@ public class GameController {
         Player[][] playerField = webGameMapper.toDomain(request.field());
         GameField requestField = new GameField(playerField);
 
-        StepResult result = gameManagementService.gameProcess(gameId, requestField);
+        StepResult result = gameManagementService.gameProcess(gameId, requestField, (UUID) requestUserId.getAttribute("userId"));
 
         return ResponseEntity.ok(webGameMapper.toDto(
                 result.getGame(),

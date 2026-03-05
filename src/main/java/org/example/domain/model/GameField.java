@@ -1,6 +1,6 @@
 package org.example.domain.model;
 
-import static org.example.domain.Configurtion.SIZE;
+import static org.example.domain.Configuration.SIZE;
 
 public record GameField(Player[][] field) {
 

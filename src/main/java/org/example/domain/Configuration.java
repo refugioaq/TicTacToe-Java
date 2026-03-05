@@ -1,5 +1,5 @@
 package org.example.domain;
 
-public class Configurtion {
+public class Configuration {
     public final static int SIZE = 3;
 }

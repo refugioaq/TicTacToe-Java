@@ -6,7 +6,7 @@ import org.example.domain.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.domain.Configurtion.SIZE;
+import static org.example.domain.Configuration.SIZE;
 
 public class GameServiceImpl implements GameService {
     @Override

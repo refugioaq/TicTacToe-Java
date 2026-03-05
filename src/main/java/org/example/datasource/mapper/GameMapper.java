@@ -5,16 +5,21 @@ import org.example.domain.model.Game;
 import org.example.domain.model.GameField;
 import org.example.domain.model.Player;
 
-import static org.example.domain.Configurtion.SIZE;
+import static org.example.domain.Configuration.SIZE;
 
 public class GameMapper {
     public GameEntity toEntity(Game game) {
         if (game == null) return null;
-
-
         String boardState = convertArrayToString(game.getGameField().field());
 
-        return new GameEntity(boardState, game.getGameId());
+        return new GameEntity(game.getGameId(),
+                boardState,
+                game.getIdFirstPlayer(),
+                game.getIdSecondPlayer(),
+                game.getWinner(),
+                game.isTurnOfThePlayer(),
+                game.getStatus(),
+                game.getMode());
     }
 
     public Game toDomain(GameEntity entity) {
@@ -23,10 +28,17 @@ public class GameMapper {
         Player[][] field = convertStringToArray(entity.getBoardState());
         GameField gameField = new GameField(field);
 
-        return new Game(gameField, entity.getGameId());
+        return new Game(gameField,
+                entity.getGameId(),
+                entity.getIdFirstPlayer(),
+                entity.getIdSecondPlayer(),
+                entity.getWinner(),
+                entity.isTurnOfThePlayer(),
+                entity.getStatus(),
+                entity.getMode());
     }
 
-    private String convertArrayToString(Player[][] field) {
+    public String convertArrayToString(Player[][] field) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {

@@ -6,6 +6,7 @@ import org.example.domain.exception.InvalidPasswordException;
 import org.example.domain.exception.UserNotFoundException;
 import org.example.web.model.SignUpRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Base64;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean register(SignUpRequest request) {
         if (userRepository.existsByLogin(request.getLogin())) {
             return false;

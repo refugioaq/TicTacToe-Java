@@ -1,12 +1,13 @@
 package org.example.web.mapper;
 
 import org.example.domain.model.Game;
+import org.example.domain.model.GameMode;
 import org.example.domain.model.Player;
 import org.example.web.model.GameDto;
 
 import java.util.UUID;
 
-import static org.example.domain.Configurtion.SIZE;
+import static org.example.domain.Configuration.SIZE;
 
 public class WebGameMapper {
     public GameDto toDto(Game game, String message) {
@@ -18,7 +19,6 @@ public class WebGameMapper {
                 message
         );
     }
-
     public GameDto toDtoError(UUID gameId, String[][] field, String message) {
         return new GameDto(gameId, field, message);
     }
@@ -35,6 +35,14 @@ public class WebGameMapper {
             }
         }
         return domainField;
+    }
+
+    public GameMode toDomainMode(String mode) {
+        return switch (mode) {
+            case "HUMAN" -> GameMode.HUMAN;
+            case "COMPUTER" -> GameMode.COMPUTER;
+                default -> throw new IllegalStateException("Unexpected value: " + mode);
+            };
     }
 
     public String[][] convertToWebField(Player[][] field) {
