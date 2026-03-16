@@ -4,11 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.example.domain.model.*;
 import org.example.domain.service.GameManagementService;
 import org.example.web.mapper.WebGameMapper;
+import org.example.web.mapper.WebUserMapper;
 import org.example.web.model.CreateGameRequest;
 import org.example.web.model.GameDto;
+import org.example.web.model.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -17,13 +20,16 @@ public class GameController {
 
     private final GameManagementService gameManagementService;
     private final WebGameMapper webGameMapper;
+    private final WebUserMapper webUserMapper;
 
     public GameController(
             GameManagementService gameManagementService,
-            WebGameMapper webGameMapper
+            WebGameMapper webGameMapper,
+            WebUserMapper webUserMapper
     ) {
         this.gameManagementService = gameManagementService;
         this.webGameMapper = webGameMapper;
+        this.webUserMapper = webUserMapper;
     }
 
     @PostMapping("/start")
@@ -70,6 +76,16 @@ public class GameController {
         ));
     }
 
+    @GetMapping("/available")
+    ResponseEntity<List<GameDto>> getAvailableGames() {
+        List<Game> listGames = gameManagementService.getAvailableGames();
+        List<GameDto> listGamesDto = listGames
+                .stream()
+                .map(game -> webGameMapper.toDto(game, "Игра доступна"))
+                .toList();
+        return ResponseEntity.ok(listGamesDto);
+    }
+
     @GetMapping("/{gameId}")
     ResponseEntity<GameDto> getGame(@PathVariable UUID gameId) {
         StepResult result = gameManagementService.getStepResult(gameId);
@@ -78,5 +94,10 @@ public class GameController {
                         result.getGame(),
                         result.getMessage()
                 ));
+    }
+
+    @GetMapping("/users/{userId}")
+    ResponseEntity<UserDto> getUser(@PathVariable UUID userId) {
+        return ResponseEntity.ok(webUserMapper.toDto(gameManagementService.getUserById(userId)));
     }
 }

@@ -1,16 +1,18 @@
-package org.example.domain.service;
+package org.example.domain.service.strategy;
 
 import org.example.datasource.mapper.GameMapper;
 import org.example.datasource.model.GameEntity;
 import org.example.datasource.repository.GameRepository;
+import org.example.datasource.repository.UserRepository;
 import org.example.domain.model.*;
+import org.example.domain.service.gameService.GameService;
 
 import java.util.UUID;
 
 public class ComputerGameStrategy extends AbstractGameStrategy{
 
-    public ComputerGameStrategy(GameService gameService, GameRepository gameRepository, GameMapper gameMapper) {
-        super(gameService, gameRepository, gameMapper);
+    public ComputerGameStrategy(GameService gameService, GameRepository gameRepository, GameMapper gameMapper, UserRepository userRepository) {
+        super(gameService, gameRepository, gameMapper, userRepository);
     }
 
     @Override
@@ -24,6 +26,8 @@ public class ComputerGameStrategy extends AbstractGameStrategy{
     public StepResult processMove(UUID gameId, GameField newField, UUID userId) {
         Game game = getStartValues(gameId);
 
+        validateMark(game, newField, userId);
+        validateEndGame(game);
         validateTurn(game, userId);
         validateField(game, newField);
 
@@ -40,7 +44,7 @@ public class ComputerGameStrategy extends AbstractGameStrategy{
         StepResult resultAfterComputerMove = checkGameEnd(gameAfterComputerMove, userId);
         saveGameWithResult(gameAfterComputerMove, resultAfterComputerMove, userId);
 
-        return checkGameEnd(gameAfterComputerMove, userId);
+        return resultAfterComputerMove;
     }
 
     public Game applyComputerMove(Game game, UUID gameId) {
@@ -54,6 +58,8 @@ public class ComputerGameStrategy extends AbstractGameStrategy{
 
         GameEntity entity = gameRepository.findById(gameId).orElseThrow();
         entity.setBoardState(gameMapper.convertArrayToString(newField));
+
+        gameRepository.save(entity);
 
         return gameMapper.toDomain(entity);
     }

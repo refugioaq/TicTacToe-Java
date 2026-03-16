@@ -1,21 +1,28 @@
 package org.example.domain.service;
 
 import org.example.datasource.mapper.GameMapper;
+import org.example.datasource.mapper.UserMapper;
 import org.example.datasource.model.GameEntity;
+import org.example.datasource.model.UserEntity;
 import org.example.datasource.repository.GameRepository;
 import org.example.datasource.repository.UserRepository;
 import org.example.domain.exception.GameNotFoundException;
 import org.example.domain.exception.UserNotFoundException;
 import org.example.domain.model.*;
+import org.example.domain.service.gameService.GameService;
+import org.example.domain.service.strategy.GameModeStrategy;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 public record GameManagementService(
         GameRepository gameRepository,
         UserRepository userRepository,
         GameService gameService,
         GameMapper gameMapper,
+        UserMapper userMapper,
         Map<GameMode, GameModeStrategy> strategies
         ) {
 
@@ -43,10 +50,13 @@ public record GameManagementService(
         GameEntity entity = gameRepository.findById(gameId)
                 .orElseThrow(() -> new GameNotFoundException(gameId));
 
+        if (entity.getMode().equals("COMPUTER")) {
+            throw new IllegalStateException("Игра против компьютера, второк игрок не нужен");
+        }
         if (entity.getIdSecondPlayer() != null) {
             throw new IllegalStateException("Игра уже заполнена");
         }
-        if (entity.getStatus() != GameStatus.IN_PROGRESS) {
+        if (!entity.getStatus().equals("Игра продолжается")) {
             throw new IllegalStateException("Игра уже завершена");
         }
         if (entity.getIdFirstPlayer().equals(userId)) {
@@ -71,12 +81,14 @@ public record GameManagementService(
             case X_WON -> "Игрок победил";
             case DRAW -> "Ничья";
             case O_WON -> "Компьютер победил";
-            case TURN_FIRST_PLAYER -> "Очередь игрока с айди: " + game.getIdFirstPlayer();
-            case TURN_SECOND_PLAYER -> "Очередь игрока с айди: " + game.getIdSecondPlayer();
             case IN_PROGRESS -> "Игра продолжается";
         };
-        // поправить айди
-        return new StepResult(game, status, entity.getIdFirstPlayer(), message);
+
+        UUID currentId =  entity.isTurnOfThePlayer()
+                ? entity.getIdFirstPlayer()
+                : entity.getIdSecondPlayer();
+
+        return new StepResult(game, status, currentId, message);
     }
 
     public StepResult gameProcess(UUID gameId, GameField field, UUID userId) {
@@ -84,9 +96,27 @@ public record GameManagementService(
         return strategy.processMove(gameId, field, userId);
     }
 
+    public List<Game> getAvailableGames() {
+        return StreamSupport.stream(
+                gameRepository.findAll().spliterator(),
+                false
+        )
+                .filter(entity -> entity.getStatus().equals("Игра продолжается"))
+                .filter(entity -> entity.getMode().equals("HUMAN"))
+                .filter(entity -> entity.getIdSecondPlayer() == null)
+                .map(gameMapper::toDomain)
+                .toList();
+    }
+
+    public User getUserById(UUID userId) {
+        UserEntity entity = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException(userId));
+        return userMapper.toDomain(entity);
+    }
+
     private GameModeStrategy getStrategy(UUID gameId) {
         GameEntity entity = gameRepository.findById(gameId).orElseThrow(
                 () -> new GameNotFoundException(gameId));
-        return strategies.get(entity.getMode());
+        return strategies.get(gameMapper.getGameMode(entity.getMode()));
     }
 }

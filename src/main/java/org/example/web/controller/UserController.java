@@ -1,6 +1,6 @@
 package org.example.web.controller;
 
-import org.example.domain.service.UserService;
+import org.example.domain.service.userService.UserService;
 import org.example.web.model.SignUpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

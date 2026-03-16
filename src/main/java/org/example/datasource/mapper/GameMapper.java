@@ -1,9 +1,9 @@
 package org.example.datasource.mapper;
 
 import org.example.datasource.model.GameEntity;
-import org.example.domain.model.Game;
-import org.example.domain.model.GameField;
-import org.example.domain.model.Player;
+import org.example.domain.model.*;
+
+import java.util.UUID;
 
 import static org.example.domain.Configuration.SIZE;
 
@@ -18,8 +18,8 @@ public class GameMapper {
                 game.getIdSecondPlayer(),
                 game.getWinner(),
                 game.isTurnOfThePlayer(),
-                game.getStatus(),
-                game.getMode());
+                getStringGameStatus(game),
+                getStrinGameMode(game.getMode()));
     }
 
     public Game toDomain(GameEntity entity) {
@@ -34,8 +34,8 @@ public class GameMapper {
                 entity.getIdSecondPlayer(),
                 entity.getWinner(),
                 entity.isTurnOfThePlayer(),
-                entity.getStatus(),
-                entity.getMode());
+                getGameStatus(entity),
+                getGameMode(entity.getMode()));
     }
 
     public String convertArrayToString(Player[][] field) {
@@ -63,5 +63,34 @@ public class GameMapper {
             };
         }
         return field;
+    }
+
+    private String getStrinGameMode(GameMode mode) {
+        return mode == GameMode.HUMAN ? "HUMAN" : "COMPUTER";
+    }
+
+    public String getStringGameStatus(Game game) {
+        return switch (game.getStatus()) {
+            case IN_PROGRESS -> "Игра продолжается";
+            case O_WON -> (game.getMode() == GameMode.HUMAN) ? "Победа игрока" : "Победа компьютера";
+            case X_WON -> "Победа игрока";
+            case DRAW -> "Ничья";
+        };
+    }
+    
+    private GameStatus getGameStatus(GameEntity entity) {
+        UUID winnerId = entity.getWinner();
+        
+        return switch (entity.getStatus()) {
+            case "Игра продолжается" -> GameStatus.IN_PROGRESS;
+            case "Победа игрока" -> (entity.getMode().equals("COMPUTER")) ?  GameStatus.X_WON :
+                    winnerId.equals(entity.getIdFirstPlayer()) ? GameStatus.X_WON : GameStatus.O_WON ;
+            case "Ничья" -> GameStatus.DRAW;
+            default -> throw new IllegalStateException("Unexpected value: " + entity.getStatus());
+        };
+    }
+    
+    public GameMode getGameMode(String mode) {
+        return mode.equals("HUMAN") ? GameMode.HUMAN : GameMode.COMPUTER;
     }
 }

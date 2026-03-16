@@ -28,14 +28,14 @@ public class GameEntity {
     private boolean turnOfThePlayer;
 
     @Column
-    private GameStatus status;
+    private String status;
 
-    private GameMode mode;
+    private String mode;
 
     public GameEntity() {
     }
 
-    public GameEntity(UUID gameId, String boardState, UUID idFirstPlayer, UUID idSecondPlayer, UUID winner, boolean turnOfThePlayer, GameStatus status, GameMode mode) {
+    public GameEntity(UUID gameId, String boardState, UUID idFirstPlayer, UUID idSecondPlayer, UUID winner, boolean turnOfThePlayer, String status, String mode) {
         this.gameId = gameId;
         this.boardState = boardState;
         this.idFirstPlayer = idFirstPlayer;
@@ -94,19 +94,19 @@ public class GameEntity {
         this.turnOfThePlayer = turnOfThePlayer;
     }
 
-    public GameStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public GameMode getMode() {
+    public String getMode() {
         return mode;
     }
 
-    public void setMode(GameMode mode) {
+    public void setMode(String mode) {
         this.mode = mode;
     }
 }

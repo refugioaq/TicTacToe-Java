@@ -5,55 +5,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af32925a-e501-448c-a264-2080bd85bf1d" name="Changes" comment="checkSsh">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameModeStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/AbstractGameStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/ComputerGameStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/CreateGameRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/di/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebUserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/model/GameEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/model/GameEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/Application.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/di/AppConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/di/AppConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/Configurtion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/exception/UserNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/exception/UserNotFoundException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/GameField.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/GameField.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/GameModeStrategy.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/GameStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/GameStatus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/AbstractGameStrategy.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/AuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/AuthFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/ComputerGameStrategy.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/HumanGameStrategy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/UserServiceImpl.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/GameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/UserController.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/model/GameDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/model/GameDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/GameController.class.uniqueId0" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/mapper/GameMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/mapper/GameMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/model/GameEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/model/GameEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/di/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/di/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Configurtion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Configuration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/exception/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/exception/UserNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameModeStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/GameModeStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/GameStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/StepResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/StepResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/AbstractGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/AbstractGameStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/ComputerGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/ComputerGameStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/gameService/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/gameService/GameServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/HumanGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/HumanGameStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/userService/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/userService/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebGameMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebGameMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/model/GameDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/GameDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +119,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/refugioa/Desktop/CHECK/AP1_Jv_T04B.ID_1421426-1/src/TicTacToe&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/refugioa/Desktop/school_projects/D01_Linux.ID_356272-2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
@@ -136,5 +149,20 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="checkSsh" />
     <option name="LAST_COMMIT_MESSAGE" value="checkSsh" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/web/controller/GlobalExceptionHandler.java</url>
+          <line>12</line>
+          <properties class="org.example.web.controller.GlobalExceptionHandler" method="handleNotFound">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

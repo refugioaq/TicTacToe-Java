@@ -5,6 +5,7 @@ import org.example.domain.model.GameMode;
 import org.example.domain.model.Player;
 import org.example.web.model.GameDto;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.example.domain.Configuration.SIZE;
@@ -16,11 +17,12 @@ public class WebGameMapper {
         return new GameDto(
                 game.getGameId(),
                 convertToWebField(game.getGameField().field()),
+                game.getMode(),
                 message
         );
     }
     public GameDto toDtoError(UUID gameId, String[][] field, String message) {
-        return new GameDto(gameId, field, message);
+        return new GameDto(gameId, field, null, message);
     }
 
     public Player[][] toDomain(String[][] field) {

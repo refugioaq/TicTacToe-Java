@@ -1,9 +1,7 @@
-package org.example.domain.service;
+package org.example.domain.service.userService;
 
 import org.example.datasource.model.UserEntity;
 import org.example.datasource.repository.UserRepository;
-import org.example.domain.exception.InvalidPasswordException;
-import org.example.domain.exception.UserNotFoundException;
 import org.example.web.model.SignUpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,10 +41,14 @@ public class UserServiceImpl implements UserService {
         }
 
         UserEntity entity = userRepository.findByLogin(login)
-                .orElseThrow(() -> new UserNotFoundException(login));
-        
+                .orElseThrow(null);
+
+        if (entity == null) {
+            return null;
+        }
+
         if (!password.equals(entity.getPassword())) {
-            throw new InvalidPasswordException();
+            return null;
         }
 
         return entity.getUserId();

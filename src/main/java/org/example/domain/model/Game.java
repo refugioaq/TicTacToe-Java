@@ -12,6 +12,9 @@ public class Game {
     private final GameStatus status;
     private final GameMode mode;
 
+    private final Player firstPlayerMark = Player.X;
+    private final Player secondPlayerMark = Player.O;
+
     public Game(GameField gameField,
                 UUID idFirstPlayer, GameMode mode
                 ) {
@@ -82,5 +85,25 @@ public class Game {
 
     public Game withToggledTurn() {
         return new Game(gameField, gameId, idFirstPlayer, idSecondPlayer, winner, !turnOfThePlayer, status, mode);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameField=" + gameField +
+                ", gameId=" + gameId +
+                ", idFirstPlayer=" + idFirstPlayer +
+                ", idSecondPlayer=" + idSecondPlayer +
+                ", winner=" + winner +
+                ", turnOfThePlayer=" + turnOfThePlayer +
+                ", status=" + status +
+                ", mode=" + mode +
+                ", firstPlayerMark=" + firstPlayerMark +
+                ", secondPlayerMark=" + secondPlayerMark +
+                '}';
+    }
+
+    public char getPlayerMark(UUID userId) {
+        return userId.equals(idFirstPlayer) ? 'X' : 'O';
     }
 }

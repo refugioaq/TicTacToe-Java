@@ -1,4 +1,4 @@
-package org.example.domain.service;
+package org.example.domain.service.userService;
 
 import org.example.web.model.SignUpRequest;
 import org.springframework.transaction.annotation.Transactional;

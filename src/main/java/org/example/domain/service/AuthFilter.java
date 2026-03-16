@@ -6,10 +6,12 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.domain.service.userService.UserService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.UUID;
 
 public class AuthFilter extends GenericFilterBean {
@@ -25,32 +27,37 @@ public class AuthFilter extends GenericFilterBean {
             ServletResponse servletResponse,
             FilterChain chain
     ) throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String path = request.getRequestURI();
 
-        if(path.contains("auth/register") || path.contains("auth/login")) {
+        if (path.contains("auth/register") || path.contains("auth/login") || path.endsWith("/error")) {
             chain.doFilter(request, response);
             return;
         }
 
         String authHeader = request.getHeader("Authorization");
 
-        if(authHeader == null || !authHeader.startsWith("Basic ")) {
+        if (authHeader == null || !authHeader.startsWith("Basic ")) {
             response.sendError(401, "Требуется авторизация");
             return;
         }
 
-        String base64Credentials = authHeader.substring("Basic ".length());
-
         try {
+            String base64Credentials = authHeader.substring("Basic ".length());
             UUID id = userService.authorize(base64Credentials);
             request.setAttribute("userId", id);
-            chain.doFilter(request, response);
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(id, null, null);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
         } catch (Exception e) {
-            System.err.println("Auth error: " + e.getMessage());
             response.sendError(401, "Неверный логин или пароль");
         }
+
+        chain.doFilter(request, response);
     }
 }

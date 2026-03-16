@@ -1,17 +1,19 @@
-package org.example.domain.service;
+package org.example.domain.service.strategy;
 
 import org.example.datasource.mapper.GameMapper;
 import org.example.datasource.repository.GameRepository;
+import org.example.datasource.repository.UserRepository;
 import org.example.domain.model.Game;
 import org.example.domain.model.GameField;
 import org.example.domain.model.StepResult;
+import org.example.domain.service.gameService.GameService;
 
 import java.util.UUID;
 
 public class HumanGameStrategy extends AbstractGameStrategy {
 
-    public HumanGameStrategy(GameService gameService, GameRepository gameRepository, GameMapper gameMapper) {
-        super(gameService, gameRepository, gameMapper);
+    public HumanGameStrategy(GameService gameService, GameRepository gameRepository, GameMapper gameMapper, UserRepository userRepository) {
+        super(gameService, gameRepository, gameMapper, userRepository);
     }
 
     @Override
@@ -27,6 +29,10 @@ public class HumanGameStrategy extends AbstractGameStrategy {
     public StepResult processMove(UUID gameId, GameField newField, UUID userId) {
         Game game = getStartValues(gameId);
 
+        System.out.println(game.toString());
+
+        validateMark(game, newField, userId);
+        validateEndGame(game);
         validateTurn(game, userId);
         validateField(game, newField);
 

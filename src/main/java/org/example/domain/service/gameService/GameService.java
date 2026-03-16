@@ -1,4 +1,4 @@
-package org.example.domain.service;
+package org.example.domain.service.gameService;
 
 import org.example.domain.model.*;
 
