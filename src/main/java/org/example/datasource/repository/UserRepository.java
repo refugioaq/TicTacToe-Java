@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface UserRepository extends CrudRepository<UserEntity, UUID> {
     boolean existsByLogin(String login);
     Optional<UserEntity> findByLogin(String login);
+    Optional<UserEntity> findByRefreshToken(String refreshToken);
 }

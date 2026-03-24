@@ -1,56 +1,116 @@
 package org.example.domain.service.userService;
 
+import org.example.datasource.mapper.UserMapper;
 import org.example.datasource.model.UserEntity;
 import org.example.datasource.repository.UserRepository;
+import org.example.domain.exception.InvalidTokenException;
+import org.example.domain.exception.UserNotFoundException;
+import org.example.domain.model.User;
+import org.example.domain.security.JwtAuthentication;
+import org.example.domain.service.security.JwtProvider;
+import org.example.domain.service.security.JwtUtil;
+import org.example.web.model.JwtRequest;
+import org.example.web.model.JwtResponse;
 import org.example.web.model.SignUpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Base64;
 import java.util.UUID;
+
+import static org.example.domain.Configuration.TYPE;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    private final UserRepository repository;
+    private final JwtUtil util;
+    private final UserMapper mapper;
+    private final JwtProvider provider;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UserRepository repository, JwtUtil util, UserMapper mapper, JwtProvider provider) {
+        this.repository = repository;
+        this.util = util;
+        this.mapper = mapper;
+        this.provider = provider;
     }
 
     @Override
     @Transactional
     public boolean register(SignUpRequest request) {
-        if (userRepository.existsByLogin(request.getLogin())) {
+        if (repository.existsByLogin(request.getLogin())) {
             return false;
         }
-        UserEntity entity = new UserEntity(UUID.randomUUID(), request.getLogin(), request.getPassword());
-        userRepository.save(entity);
+        UserEntity entity = new UserEntity(UUID.randomUUID(), request.getLogin(), request.getPassword(), "USER", null);
+        repository.save(entity);
         return true;
     }
 
     @Override
-    public UUID authorize(String base64) {
-        String decoded = new String(Base64.getDecoder().decode(base64));
+    public JwtResponse login(JwtRequest request) {
 
-        String[] data = decoded.split(":");
-        String login = data[0];
-        String password = data[1];
+        String login = request.login();
+        String password = request.password();
 
-        if (!userRepository.existsByLogin(login)) {
-            return null;
-        }
-
-        UserEntity entity = userRepository.findByLogin(login)
-                .orElseThrow(null);
-
-        if (entity == null) {
-            return null;
-        }
+        UserEntity entity = repository.findByLogin(login)
+                .orElseThrow(() -> new UserNotFoundException(login));
 
         if (!password.equals(entity.getPassword())) {
-            return null;
+            throw new UserNotFoundException();
         }
 
-        return entity.getUserId();
+        String refreshToken = provider.generateRefreshToken(mapper.toDomain(entity));
+
+        entity.setRefreshToken(refreshToken);
+        repository.save(entity);
+
+        return new JwtResponse(TYPE, provider.generateAccessToken(mapper.toDomain(entity)), refreshToken);
+    }
+
+    @Override
+    public JwtResponse access(String refreshToken) {
+        if (!provider.validateRefreshToken(refreshToken)) {
+            throw new InvalidTokenException();
+        }
+
+        UserEntity entity = repository.findByRefreshToken(refreshToken)
+                .orElseThrow(InvalidTokenException::new);
+
+        return new JwtResponse(TYPE,
+                provider.generateAccessToken(mapper.toDomain(entity)),
+                refreshToken);
+    }
+
+    @Override
+    public JwtResponse refresh(String refreshToken) {
+        if (!provider.validateRefreshToken(refreshToken)) {
+            throw new InvalidTokenException();
+        }
+
+        UserEntity entity = repository.findByRefreshToken(refreshToken)
+                .orElseThrow(InvalidTokenException::new);
+
+        return new JwtResponse(TYPE,
+                provider.generateAccessToken(mapper.toDomain(entity)),
+                provider.generateRefreshToken(mapper.toDomain(entity)));
+    }
+
+    @Override
+    public JwtAuthentication getJwtAuthentication() {
+        if (SecurityContextHolder.getContext().getAuthentication() instanceof JwtAuthentication jwtAuth) {
+            return jwtAuth;
+        }
+        return null;
+    }
+
+    @Override
+    public User getUserByAccessToken(UUID userId) {
+
+        UserEntity entity = repository
+                .findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+        if (!provider.validateRefreshToken(entity.getRefreshToken())) {
+            throw new InvalidTokenException();
+        }
+
+        return mapper.toDomain(entity);
     }
 }

@@ -35,7 +35,8 @@ public class GameMapper {
                 entity.getWinner(),
                 entity.isTurnOfThePlayer(),
                 getGameStatus(entity),
-                getGameMode(entity.getMode()));
+                getGameMode(entity.getMode()),
+                String.valueOf(entity.getCreatedAt()));
     }
 
     public String convertArrayToString(Player[][] field) {
@@ -86,6 +87,7 @@ public class GameMapper {
             case "Победа игрока" -> (entity.getMode().equals("COMPUTER")) ?  GameStatus.X_WON :
                     winnerId.equals(entity.getIdFirstPlayer()) ? GameStatus.X_WON : GameStatus.O_WON ;
             case "Ничья" -> GameStatus.DRAW;
+            case "Победа компьютера" -> GameStatus.O_WON;
             default -> throw new IllegalStateException("Unexpected value: " + entity.getStatus());
         };
     }

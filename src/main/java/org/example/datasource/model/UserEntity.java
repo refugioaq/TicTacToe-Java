@@ -1,7 +1,9 @@
 package org.example.datasource.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -14,11 +16,23 @@ public class UserEntity {
     @Column
     private String  password;
 
+    @Column
+    private String role;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
+    @Column(name="created_at")
+    @CreationTimestamp
+    private LocalTime createdAt;
+
     public UserEntity() {}
-    public UserEntity(UUID userId, String login, String password) {
+    public UserEntity(UUID userId, String login, String password, String role, String refreshToken) {
         this.userId = userId;
         this.login = login;
         this.password = password;
+        this.role = role;
+        this.refreshToken = refreshToken;
     }
 
     public UUID getUserId() {
@@ -43,5 +57,21 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

@@ -5,6 +5,6 @@ import org.example.web.model.UserDto;
 
 public class WebUserMapper {
     public UserDto toDto(User user) {
-        return new UserDto(user.getUserId(), user.getLogin());
+        return new UserDto(user.userId(), user.login(), user.role());
     }
 }

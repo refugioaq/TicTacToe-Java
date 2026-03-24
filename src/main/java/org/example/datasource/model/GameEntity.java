@@ -3,7 +3,9 @@ package org.example.datasource.model;
 import jakarta.persistence.*;
 import org.example.domain.model.GameMode;
 import org.example.domain.model.GameStatus;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -24,13 +26,17 @@ public class GameEntity {
     @Column
     private UUID winner;
 
-    @Column
+    @Column(name = "turn_of_the_player ")
     private boolean turnOfThePlayer;
 
     @Column
     private String status;
 
     private String mode;
+
+    @Column(name="created_at")
+    @CreationTimestamp
+    private LocalTime createdAt;
 
     public GameEntity() {
     }
@@ -100,6 +106,14 @@ public class GameEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getMode() {
