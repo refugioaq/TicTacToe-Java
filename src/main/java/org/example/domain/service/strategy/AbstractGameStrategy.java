@@ -2,6 +2,7 @@ package org.example.domain.service.strategy;
 
 import org.example.datasource.mapper.GameMapper;
 import org.example.datasource.model.GameEntity;
+import org.example.datasource.model.UserEntity;
 import org.example.datasource.repository.GameRepository;
 import org.example.datasource.repository.UserRepository;
 import org.example.domain.exception.GameNotFoundException;
@@ -97,7 +98,7 @@ public abstract class AbstractGameStrategy implements GameModeStrategy {
             entity.setWinner(null);
         }
 
-        String status = getStringGameStatusFromEnum(result.getStatus(), entity.getMode());
+        String status = getStringGameStatusFromEnum(result.getStatus());
         entity.setStatus(status);
     }
 
@@ -119,12 +120,12 @@ public abstract class AbstractGameStrategy implements GameModeStrategy {
         return copy;
     }
 
-    private String getStringGameStatusFromEnum(GameStatus status, String mode) {
+    private String getStringGameStatusFromEnum(GameStatus status) {
         return switch (status) {
-            case IN_PROGRESS -> "Игра продолжается";
-            case X_WON -> "Победа игрока";
-            case O_WON -> (mode.equals("HUMAN")) ? "Победа компьютера" : "Победа игрока";
-            case DRAW -> "Ничья";
+            case IN_PROGRESS -> "IN_PROGRESS";
+            case X_WON -> "X_WON";
+            case O_WON -> "O_WON";
+            case DRAW -> "DRAW";
         };
     }
 }

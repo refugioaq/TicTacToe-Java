@@ -13,6 +13,7 @@ import org.example.web.model.JwtRequest;
 import org.example.web.model.JwtResponse;
 import org.example.web.model.SignUpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
@@ -25,12 +26,14 @@ public class UserServiceImpl implements UserService {
     private final JwtUtil util;
     private final UserMapper mapper;
     private final JwtProvider provider;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository repository, JwtUtil util, UserMapper mapper, JwtProvider provider) {
+    public UserServiceImpl(UserRepository repository, JwtUtil util, UserMapper mapper, JwtProvider provider, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.util = util;
         this.mapper = mapper;
         this.provider = provider;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -39,7 +42,10 @@ public class UserServiceImpl implements UserService {
         if (repository.existsByLogin(request.getLogin())) {
             return false;
         }
-        UserEntity entity = new UserEntity(UUID.randomUUID(), request.getLogin(), request.getPassword(), "USER", null);
+
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
+
+        UserEntity entity = new UserEntity(UUID.randomUUID(), request.getLogin(), hashedPassword, "USER", null);
         repository.save(entity);
         return true;
     }
@@ -48,13 +54,12 @@ public class UserServiceImpl implements UserService {
     public JwtResponse login(JwtRequest request) {
 
         String login = request.login();
-        String password = request.password();
 
         UserEntity entity = repository.findByLogin(login)
                 .orElseThrow(() -> new UserNotFoundException(login));
 
-        if (!password.equals(entity.getPassword())) {
-            throw new UserNotFoundException();
+        if (!passwordEncoder.matches(request.password(), entity.getPassword())) {
+            throw new UserNotFoundException(login);
         }
 
         String refreshToken = provider.generateRefreshToken(mapper.toDomain(entity));

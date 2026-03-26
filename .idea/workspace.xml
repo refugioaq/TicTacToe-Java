@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af32925a-e501-448c-a264-2080bd85bf1d" name="Changes" comment="checkSsh">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/exception/InvalidTokenException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/security/JwtAuthentication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/security/JwtProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/security/JwtUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/JwtRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/JwtResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/RefreshJwtRequest.java" afterDir="false" />
+    <list default="true" id="af32925a-e501-448c-a264-2080bd85bf1d" name="Changes" comment="&quot;add JWT&quot;">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/LeaderboardEntry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
@@ -23,54 +14,43 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/GameMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/mapper/UserMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/model/GameEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/model/GameEntity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/model/UserEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/model/UserEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/di/AppConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/di/AppConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/repository/GameRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/datasource/repository/GameRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/di/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/di/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/exception/InvalidPasswordException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/exception/UserNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/exception/UserNotFoundException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/model/Game.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/AuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/AuthFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/userService/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/userService/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/GameManagementService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/strategy/AbstractGameStrategy$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/strategy/AbstractGameStrategy$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/strategy/AbstractGameStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/strategy/AbstractGameStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/strategy/HumanGameStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/strategy/HumanGameStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/userService/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/domain/service/userService/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/GameController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/GlobalExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebUserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebUserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AppConfig.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/GameController.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/GameManagementService$1.class.uniqueId3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/GameManagementService.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/mapper/WebGameMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/web/model/GameDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/web/model/GameDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/mapper/GameMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/mapper/GameMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/mapper/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/model/GameEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/model/GameEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/model/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/model/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/di/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/di/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/datasource/repository/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/datasource/repository/GameRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/di/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/di/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Configuration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/exception/InvalidPasswordException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/exception/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/exception/UserNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/AuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/userService/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/userService/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/GameManagementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/AbstractGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/AbstractGameStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/HumanGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/strategy/HumanGameStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/service/userService/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/service/userService/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/controller/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/model/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebGameMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/mapper/WebGameMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/model/GameDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/model/GameDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,27 +91,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Application.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Gradle.Build TicTocToe-Java.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.TicTacToe-Java [:org.example.Application.main()].executor": "Run",
-    "Gradle.TicTocToe-Java [:org.example.Application.main()].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/refugioa/Desktop/CHECK",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Application.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Gradle.Build TicTocToe-Java.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TicTacToe-Java [:org.example.Application.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TicTocToe-Java [:org.example.Application.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/refugioa/Desktop/GitHub/TicTacToe-Java&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="exersize" />
@@ -153,10 +133,20 @@
       <option name="presentableId" value="Default" />
       <updated>1771869412666</updated>
     </task>
+    <task id="LOCAL-00001" summary="&quot;add JWT&quot;">
+      <option name="closed" value="true" />
+      <created>1774377535618</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774377535618</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="checkSsh" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkSsh" />
+    <MESSAGE value="&quot;add JWT&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;add JWT&quot;" />
   </component>
 </project>

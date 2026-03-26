@@ -19,7 +19,8 @@ public class GameMapper {
                 game.getWinner(),
                 game.isTurnOfThePlayer(),
                 getStringGameStatus(game),
-                getStrinGameMode(game.getMode()));
+                getStringGameMode(game.getMode()),
+                game.getCreatedAt());
     }
 
     public Game toDomain(GameEntity entity) {
@@ -36,7 +37,7 @@ public class GameMapper {
                 entity.isTurnOfThePlayer(),
                 getGameStatus(entity),
                 getGameMode(entity.getMode()),
-                String.valueOf(entity.getCreatedAt()));
+                entity.getCreatedAt());
     }
 
     public String convertArrayToString(Player[][] field) {
@@ -66,30 +67,16 @@ public class GameMapper {
         return field;
     }
 
-    private String getStrinGameMode(GameMode mode) {
+    private String getStringGameMode(GameMode mode) {
         return mode == GameMode.HUMAN ? "HUMAN" : "COMPUTER";
     }
 
     public String getStringGameStatus(Game game) {
-        return switch (game.getStatus()) {
-            case IN_PROGRESS -> "Игра продолжается";
-            case O_WON -> (game.getMode() == GameMode.HUMAN) ? "Победа игрока" : "Победа компьютера";
-            case X_WON -> "Победа игрока";
-            case DRAW -> "Ничья";
-        };
+        return String.valueOf(game.getStatus());
     }
     
     private GameStatus getGameStatus(GameEntity entity) {
-        UUID winnerId = entity.getWinner();
-        
-        return switch (entity.getStatus()) {
-            case "Игра продолжается" -> GameStatus.IN_PROGRESS;
-            case "Победа игрока" -> (entity.getMode().equals("COMPUTER")) ?  GameStatus.X_WON :
-                    winnerId.equals(entity.getIdFirstPlayer()) ? GameStatus.X_WON : GameStatus.O_WON ;
-            case "Ничья" -> GameStatus.DRAW;
-            case "Победа компьютера" -> GameStatus.O_WON;
-            default -> throw new IllegalStateException("Unexpected value: " + entity.getStatus());
-        };
+        return GameStatus.valueOf(entity.getStatus());
     }
     
     public GameMode getGameMode(String mode) {

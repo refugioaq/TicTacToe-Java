@@ -8,6 +8,7 @@ import org.example.web.mapper.WebGameMapper;
 import org.example.web.mapper.WebUserMapper;
 import org.example.web.model.CreateGameRequest;
 import org.example.web.model.GameDto;
+import org.example.web.model.LeaderboardEntry;
 import org.example.web.model.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -63,14 +64,6 @@ public class GameController {
             @PathVariable UUID gameId,
             @RequestBody GameDto request
     ) {
-        if (!gameId.equals(request.gameId())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(webGameMapper.toDtoError(gameId,
-                            request.field(),
-                            "ID игры не совпадают"
-                    ));
-        }
 
         Player[][] playerField = webGameMapper.toDomain(request.field());
         GameField requestField = new GameField(playerField);
@@ -106,8 +99,31 @@ public class GameController {
                 ));
     }
 
+    // data about users
     @GetMapping("/users/{userId}")
     ResponseEntity<UserDto> getUser(@PathVariable UUID userId) {
         return ResponseEntity.ok(webUserMapper.toDto(gameManagementService.getUserById(userId)));
     }
+
+    // data about users game
+    @GetMapping("/my-games")
+    ResponseEntity<List<GameDto>> getUserStatistics() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UUID userId = (UUID) authentication.getPrincipal();
+
+        List<Game> listGame = gameManagementService.getGamesByUser(userId);
+        List<GameDto> listGamesDto = listGame
+                .stream()
+                .map(game -> webGameMapper.toDto(game,
+                        game.getStatus() == GameStatus.DRAW ? "НИЧЬЯ" : "ПОБЕДА"))
+                .toList();
+        return ResponseEntity.ok(listGamesDto);
+    }
+
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<LeaderboardEntry>> getLeaderboard(@RequestParam(defaultValue = "3") int top) {
+        List<LeaderboardEntry> leaderboard = gameManagementService.getTopPlayers(top);
+        return ResponseEntity.ok(leaderboard);
+    }
+
 }

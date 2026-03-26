@@ -48,7 +48,6 @@ public class AuthFilter extends GenericFilterBean {
         }
 
         String authHeader = request.getHeader("Authorization");
-        System.out.println(authHeader);
         if (authHeader == null || !authHeader.startsWith(TYPE)) {
             response.sendError(401, "Требуется авторизация");
             return;
@@ -58,21 +57,19 @@ public class AuthFilter extends GenericFilterBean {
             String token = authHeader.substring(TYPE.length()).trim();
             Claims claims = jwtProvider.getClaim(token);
 
-            UUID userId = UUID.fromString(claims.get("userId", String.class));
-            request.setAttribute("userId", userId);
-
             if (!jwtProvider.validateAccessToken(token)) {
                 response.sendError(401, "Неверный логин или пароль");
                 return;
             }
 
-            System.out.println(claims);
+            UUID userId = UUID.fromString(claims.get("userId", String.class));
+            request.setAttribute("userId", userId);
+
             JwtAuthentication authentication = jwtUtil.createJwtAuthentication(claims);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             chain.doFilter(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
             response.setStatus(401);
             response.getWriter().write(e.getMessage());
 

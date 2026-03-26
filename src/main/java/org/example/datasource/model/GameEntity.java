@@ -1,11 +1,8 @@
 package org.example.datasource.model;
 
 import jakarta.persistence.*;
-import org.example.domain.model.GameMode;
-import org.example.domain.model.GameStatus;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -26,7 +23,7 @@ public class GameEntity {
     @Column
     private UUID winner;
 
-    @Column(name = "turn_of_the_player ")
+    @Column(name = "turn_of_the_player")
     private boolean turnOfThePlayer;
 
     @Column
@@ -34,14 +31,13 @@ public class GameEntity {
 
     private String mode;
 
-    @Column(name="created_at")
+    @Column(name="created_at", nullable = false, updatable = false, columnDefinition = "timestamp(0)")
     @CreationTimestamp
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
-    public GameEntity() {
-    }
+    public GameEntity() {}
 
-    public GameEntity(UUID gameId, String boardState, UUID idFirstPlayer, UUID idSecondPlayer, UUID winner, boolean turnOfThePlayer, String status, String mode) {
+    public GameEntity(UUID gameId, String boardState, UUID idFirstPlayer, UUID idSecondPlayer, UUID winner, boolean turnOfThePlayer, String status, String mode, LocalDateTime createdAt) {
         this.gameId = gameId;
         this.boardState = boardState;
         this.idFirstPlayer = idFirstPlayer;
@@ -50,6 +46,7 @@ public class GameEntity {
         this.turnOfThePlayer = turnOfThePlayer;
         this.status = status;
         this.mode = mode;
+        this.createdAt = createdAt;
     }
 
     public UUID getGameId() {
@@ -76,6 +73,14 @@ public class GameEntity {
         this.idFirstPlayer = idFirstPlayer;
     }
 
+    public void setTurnOfThePlayer(boolean turnOfThePlayer) {
+        this.turnOfThePlayer = turnOfThePlayer;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
     public UUID getIdSecondPlayer() {
         return idSecondPlayer;
     }
@@ -96,10 +101,6 @@ public class GameEntity {
         return turnOfThePlayer;
     }
 
-    public void setTurnOfThePlayer(boolean turnOfThePlayer) {
-        this.turnOfThePlayer = turnOfThePlayer;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -108,19 +109,15 @@ public class GameEntity {
         this.status = status;
     }
 
-    public LocalTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
     public String getMode() {
         return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
     }
 }

@@ -11,7 +11,9 @@ import org.example.domain.exception.UserNotFoundException;
 import org.example.domain.model.*;
 import org.example.domain.service.gameService.GameService;
 import org.example.domain.service.strategy.GameModeStrategy;
+import org.example.web.model.LeaderboardEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -56,7 +58,7 @@ public record GameManagementService(
         if (entity.getIdSecondPlayer() != null) {
             throw new IllegalStateException("Игра уже заполнена");
         }
-        if (!entity.getStatus().equals("Игра продолжается")) {
+        if (!entity.getStatus().equals("IN_PROGRESS")) {
             throw new IllegalStateException("Игра уже завершена");
         }
         if (entity.getIdFirstPlayer().equals(userId)) {
@@ -76,11 +78,14 @@ public record GameManagementService(
         Game game = gameMapper.toDomain(entity);
 
         GameStatus status = gameService.checkGameEnd(game.getGameField().field());
-
         String message = switch (status) {
-            case X_WON -> "Игрок победил";
+            case X_WON -> "Победил игрок с ником " +
+                    userRepository.findById(game.getIdFirstPlayer())
+                            .orElseThrow(null).getLogin();
             case DRAW -> "Ничья";
-            case O_WON -> "Компьютер победил";
+            case O_WON -> game.getMode() == GameMode.HUMAN ?
+                    "Победил игрок с ником " + userRepository.findById(game.getIdSecondPlayer())
+                            .orElseThrow(null).getLogin() : "Компьютер победил";
             case IN_PROGRESS -> "Игра продолжается";
         };
 
@@ -101,10 +106,31 @@ public record GameManagementService(
                 gameRepository.findAll().spliterator(),
                 false
         )
-                .filter(entity -> entity.getStatus().equals("Игра продолжается"))
+                .filter(entity -> entity.getStatus().equals("IN_PROGRESS"))
                 .filter(entity -> entity.getMode().equals("HUMAN"))
                 .filter(entity -> entity.getIdSecondPlayer() == null)
                 .map(gameMapper::toDomain)
+                .toList();
+    }
+
+    public List<Game> getGamesByUser(UUID userId) {
+        return gameRepository
+                .findCompletedGamesByUserId(userId)
+                .stream()
+                .map(gameMapper::toDomain)
+                .toList();
+    }
+
+    public  List<LeaderboardEntry> getTopPlayers(int top) {
+        List<Object[]> leaderboardObjects = gameRepository.getTop(top);
+
+        return leaderboardObjects
+                .stream()
+                .map(row -> new LeaderboardEntry(
+                        (UUID) row[0],
+                        (String) row[1],
+                        (String) row[2]
+                ))
                 .toList();
     }
 

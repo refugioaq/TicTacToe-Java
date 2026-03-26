@@ -3,6 +3,7 @@ package org.example.datasource.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -21,10 +22,6 @@ public class UserEntity {
 
     @Column(name = "refresh_token")
     private String refreshToken;
-
-    @Column(name="created_at")
-    @CreationTimestamp
-    private LocalTime createdAt;
 
     public UserEntity() {}
     public UserEntity(UUID userId, String login, String password, String role, String refreshToken) {

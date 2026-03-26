@@ -5,9 +5,6 @@ import org.example.domain.model.GameMode;
 import org.example.domain.model.Player;
 import org.example.web.model.GameDto;
 
-import java.util.List;
-import java.util.UUID;
-
 import static org.example.domain.Configuration.SIZE;
 
 public class WebGameMapper {
@@ -16,13 +13,14 @@ public class WebGameMapper {
         if (game == null || message == null) return null;
         return new GameDto(
                 game.getGameId(),
+                game.getIdFirstPlayer(),
+                game.getIdSecondPlayer(),
+                game.getWinner(),
                 convertToWebField(game.getGameField().field()),
                 game.getMode(),
-                message
+                message,
+                game.getCreatedAt()
         );
-    }
-    public GameDto toDtoError(UUID gameId, String[][] field, String message) {
-        return new GameDto(gameId, field, null, message);
     }
 
     public Player[][] toDomain(String[][] field) {

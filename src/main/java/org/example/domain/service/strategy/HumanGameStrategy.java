@@ -29,8 +29,6 @@ public class HumanGameStrategy extends AbstractGameStrategy {
     public StepResult processMove(UUID gameId, GameField newField, UUID userId) {
         Game game = getStartValues(gameId);
 
-        System.out.println(game.toString());
-
         validateMark(game, newField, userId);
         validateEndGame(game);
         validateTurn(game, userId);
@@ -43,7 +41,6 @@ public class HumanGameStrategy extends AbstractGameStrategy {
         saveGameWithResult(game, resultAfterPlayerMove, userId);
 
         return resultAfterPlayerMove;
-
     }
 
     private Game handlePostMove(Game game) {

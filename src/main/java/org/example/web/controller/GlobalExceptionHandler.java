@@ -32,7 +32,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAll(Exception e) {
-        e.printStackTrace();
         return ResponseEntity.status(500).body("Internal error: " + e.getClass().getSimpleName() + ": " + e.getMessage());
     }
 }
